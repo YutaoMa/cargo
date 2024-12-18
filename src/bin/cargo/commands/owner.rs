@@ -37,7 +37,7 @@ pub fn exec(gctx: &mut GlobalContext, args: &ArgMatches) -> CliResult {
     let opts = OwnersOptions {
         krate: args.get_one::<String>("crate").cloned(),
         token: args.get_one::<String>("token").cloned().map(Secret::from),
-        reg_or_index: args.registry_or_index(gctx)?,
+        reg_or_index: args.registry_or_index_with_default(gctx)?,
         to_add: args
             .get_many::<String>("add")
             .map(|xs| xs.cloned().collect()),

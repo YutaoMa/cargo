@@ -29,7 +29,7 @@ pub fn exec(gctx: &mut GlobalContext, args: &ArgMatches) -> CliResult {
     let spec = PackageIdSpec::parse(package)
         .with_context(|| format!("invalid package ID specification: `{package}`"))?;
 
-    let reg_or_index = args.registry_or_index(gctx)?;
+    let reg_or_index = args.registry_or_index_with_default(gctx)?;
     info(&spec, gctx, reg_or_index)?;
     Ok(())
 }

@@ -881,11 +881,18 @@ Run `{cmd}` to see possible targets."
         )
     }
 
-    fn registry_or_index(&self, gctx: &GlobalContext) -> CargoResult<Option<RegistryOrIndex>> {
+    fn registry_or_index_with_default(&self, gctx: &GlobalContext) -> CargoResult<Option<RegistryOrIndex>> {
+        match self.registry_or_index()? {
+            Some(reg_or_index) => Ok(Some(reg_or_index)),
+            None => Ok(gctx.default_registry()?.map(RegistryOrIndex::Registry))
+        }
+    }
+
+    fn registry_or_index(&self) -> CargoResult<Option<RegistryOrIndex>> {
         let registry = self._value_of("registry");
         let index = self._value_of("index");
         let result = match (registry, index) {
-            (None, None) => gctx.default_registry()?.map(RegistryOrIndex::Registry),
+            (None, None) => None,
             (None, Some(i)) => Some(RegistryOrIndex::Index(i.into_url()?)),
             (Some(r), None) => {
                 RegistryName::new(r)?;

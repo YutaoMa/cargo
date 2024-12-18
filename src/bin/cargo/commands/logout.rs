@@ -14,7 +14,7 @@ pub fn cli() -> Command {
 }
 
 pub fn exec(gctx: &mut GlobalContext, args: &ArgMatches) -> CliResult {
-    let reg = args.registry_or_index(gctx)?;
+    let reg = args.registry_or_index_with_default(gctx)?;
     assert!(
         !matches!(reg, Some(RegistryOrIndex::Index(..))),
         "must not be index URL"

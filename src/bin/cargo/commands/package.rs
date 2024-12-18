@@ -60,7 +60,7 @@ pub fn exec(gctx: &mut GlobalContext, args: &ArgMatches) -> CliResult {
             gctx.cli_unstable().package_workspace,
         )?;
     }
-    let reg_or_index = args.registry_or_index(gctx)?;
+    let reg_or_index = args.registry_or_index()?;
     let ws = args.workspace(gctx)?;
     if ws.root_maybe().is_embedded() {
         return Err(anyhow::format_err!(

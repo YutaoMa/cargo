@@ -39,7 +39,7 @@ pub fn exec(gctx: &mut GlobalContext, args: &ArgMatches) -> CliResult {
         krate.map(|s| s.to_string()),
         version.map(|s| s.to_string()),
         args.get_one::<String>("token").cloned().map(Secret::from),
-        args.registry_or_index(gctx)?,
+        args.registry_or_index_with_default(gctx)?,
         args.flag("undo"),
     )?;
     Ok(())
