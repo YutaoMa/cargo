@@ -284,7 +284,13 @@ fn get_registry(
 ) -> CargoResult<SourceId> {
     let reg_or_index = match reg_or_index.clone() {
         Some(r) => Some(r),
-        None => infer_registry(pkgs)?,
+        None => {
+            let reg = infer_registry(pkgs)?;
+            match reg {
+                Some(r) => Some(r),
+                None => gctx.default_registry()?.map(RegistryOrIndex::Registry)
+            }
+        }
     };
 
     // Validate the registry against the packages' allow-lists.

@@ -101,6 +101,12 @@ pub fn publish(ws: &Workspace<'_>, opts: &PublishOpts<'_>) -> CargoResult<()> {
         }
         None => {
             let reg = super::infer_registry(&just_pkgs)?;
+
+            let reg = match reg {
+                Some(reg) => Some(reg),
+                None => opts.gctx.default_registry()?.map(RegistryOrIndex::Registry),
+            };
+
             validate_registry(&just_pkgs, reg.as_ref())?;
             if let Some(RegistryOrIndex::Registry(ref registry)) = &reg {
                 if registry != CRATES_IO_REGISTRY {

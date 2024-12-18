@@ -167,7 +167,7 @@ pub fn exec(gctx: &mut GlobalContext, args: &ArgMatches) -> CliResult {
     } else if krates.is_empty() {
         from_cwd = true;
         SourceId::for_path(gctx.cwd())?
-    } else if let Some(reg_or_index) = args.registry_or_index(gctx)? {
+    } else if let Some(reg_or_index) = args.registry_or_index_with_default(gctx)? {
         match reg_or_index {
             ops::RegistryOrIndex::Registry(r) => SourceId::alt_registry(gctx, &r)?,
             ops::RegistryOrIndex::Index(url) => SourceId::for_registry(&url)?,

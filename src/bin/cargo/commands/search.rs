@@ -24,7 +24,7 @@ pub fn cli() -> Command {
 }
 
 pub fn exec(gctx: &mut GlobalContext, args: &ArgMatches) -> CliResult {
-    let reg_or_index = args.registry_or_index(gctx)?;
+    let reg_or_index = args.registry_or_index_with_default(gctx)?;
     let limit = args.value_of_u32("limit")?;
     let limit = min(100, limit.unwrap_or(10));
     let query: Vec<&str> = args
